@@ -167,9 +167,6 @@ namespace Tamon_Testat
             Server server = new Server();
             Client client = new Client();
 
-            Console.WriteLine("Welcome to Tamon - Table Monsters!");
-            convertData("this 55 69 number", MonsterList[0]);
-            Thread.Sleep(2000);
 
             Gui gui = new Gui();
             gui.StartScreen();          // Prints Startscreen Menu and than individual Screen 1,2,3 or 4
