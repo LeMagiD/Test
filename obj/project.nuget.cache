@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "RzoGgTnnbm1sLicxUU31maxE7P7Ldqxo9npH7uIasVmS7EQVI9We9nScr6O3Zb/h+lScbZmWvXMogR6Ar3MkUw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\xxx\\source\\APROG_F23_Blank\\Tamon_Testat\\Tamon_Testat.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\xxx\\.nuget\\packages\\system.device.gpio\\2.2.0\\system.device.gpio.2.2.0.nupkg.sha512"
+  ],
+  "logs": []
+}
