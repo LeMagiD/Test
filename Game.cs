@@ -111,7 +111,8 @@ namespace Tamon_Testat
         }
         private int CalculateHp(Monster monster, int dmg, int sRate)
         {
-            monster.HP -= CalculateDmg(dmg, sRate);
+            int damage = CalculateDmg(dmg, sRate);
+            monster.HP -= damage;
             if (monster.HP <= 0)
             {
                 monster.HP = 0;
@@ -119,9 +120,9 @@ namespace Tamon_Testat
                 return monster.HP;
                 // TODO - Streamwriter (oder so) wenn verloren, danach direkt beenden/wieder zum start.
             }
-            return monster.HP;
+            return damage; ;
         }
-        private void convertData(string recStr, Monster monster)
+        private void convertData(Gui gui ,string recStr, Monster ownmonster)
         {
             //  TODO - convert received Data to string, split it into a array and use the integers for the damage and success rate
             /*
@@ -129,16 +130,21 @@ namespace Tamon_Testat
              * string [] str = s.Split(' ');
              * int damage = Int32.Parse(str[1]);
              * int success = int32.Parse(str[2]);
-             * 
             */
-            //Bsp
-            //string s = "hello 96 88 world";     // Test
+
             string s = recStr;
             string[] str = s.Split(' ');
-            int nr1 = Int32.Parse(str[1]);
-            int nr2 = Int32.Parse(str[2]);
-            int i = CalculateHp(monster, nr1, nr2);
-            Console.WriteLine($"This is a test with the number {i}");
+            int AtkValue = Int32.Parse(str[1]);
+            int successrate = Int32.Parse(str[3]);
+            int damageDone = CalculateHp(ownmonster, AtkValue, successrate);
+
+            string AtkName = str[2];
+            string enemyHp = str[0];
+            gui.UpdateGameScreen(AtkName, damageDone);
+            
+            
+            // Reihenfolge string [ownHp, AtkValue, AtkName, successrate]
+            //enemymonster hat mit "angriff" angegriffen
         }
 
         public string SendAttack(Monster monster, int move)
@@ -149,28 +155,39 @@ namespace Tamon_Testat
             string succRate = MonsterList[Gui.ownMonsterId].Moves[move].SuccessRate.ToString();
             return ownHP + " " + attackValue + " " + attackName + " " + succRate;
         }
-        private void getEnemyTamon(string Id)
+        private void getEnemyTamon(string Id)   // get enemies monster data
         {
             int monsterId = Int32.Parse(Id);
             Monster enemyMonster = MonsterList[monsterId];
             MonsterList.Add(enemyMonster);
+
+/*            Console.WriteLine("Monster Index = " + MonsterList.IndexOf(MonsterList[0]));
+            Console.WriteLine("Monster Name = " + MonsterList[0].Name);
+            for (int i = 0; i < MonsterList[0].Moves.Count; i++)
+            {
+                Console.WriteLine($"Attack {i} = " + MonsterList[0].Moves[i].Name);
+            }
+            Console.WriteLine("Monster Moves = " + MonsterList[0].Moves[1].Name);
+*/
+
         }
+
         public void Run()
         {
+            Server server = new Server();
+            Client client = new Client();
+            Gui gui = new Gui();
+            gui.StartScreen();          // Prints Startscreen Menu and than individual Screen 1,2,3 or 4
+                                        //    or stays in loop with options 3 or 4
+
             //used to test 
             Console.WriteLine("Welcome to Tamon - Table Monsters!");
-            convertData("Dmg 10 100 Acc", MonsterList[0]);
+            convertData(gui,"Dmg 10 100 AtkName", MonsterList[0]);
             Thread.Sleep(2000);
             getEnemyTamon("0");
             Thread.Sleep(2000);
             // end used to test
-            Server server = new Server();
-            Client client = new Client();
 
-
-            Gui gui = new Gui();
-            gui.StartScreen();          // Prints Startscreen Menu and than individual Screen 1,2,3 or 4
-                                        //    or stays in loop with options 3 or 4
 
             if (Gui.server)
             {                     // init Server/Client depending on Menu path
@@ -187,7 +204,7 @@ namespace Tamon_Testat
             if (Gui.server)
             {
                 enemyId = server.ReceiveData();     // Server Pi waits for enemyId (string)
-                // ToDo new Monster(5)
+                getEnemyTamon(enemyId);
                 server.SendData(monsterId);       // Server Pi sends to client ownMonsterId
                 gui.GameScreen();                   // Setup Gamescreen with own Attacks and Tamon names
             }
@@ -195,7 +212,7 @@ namespace Tamon_Testat
             {
                 client.SendData(monsterId);       // Client Pi sends to client ownMonsterId
                 enemyId = client.ReceiveData();     // Client Pi waits for enemyId (string)
-                // ToDo new Monster(5)
+                getEnemyTamon(enemyId);
                 gui.GameScreen();                   // Setup Gamescreen with own Attacks and Tamon names
             }
 
@@ -209,6 +226,8 @@ namespace Tamon_Testat
                 if (Gui.server)
                 {
                     //string HP, int AttValue, Move.Name = server.ReceiveData();
+                    convertData(gui,server.ReceiveData(),MonsterList[Gui.ownMonsterId]);
+
                     while (Program.Butt == JoystickButtons.None || Program.Butt == JoystickButtons.Center) {; ; }
                     switch (Program.Butt)
                     {
@@ -228,9 +247,10 @@ namespace Tamon_Testat
                         default:
                             server.SendData(SendAttack(MonsterList[Gui.ownMonsterId], 0));
                             break;
-                    } //server.SendData( own HP, Att Value, Att Name, successRate );
+                    } 
+                    //server.SendData( own HP, Att Value, Att Name, successRate );
 
-                    gui.UpdateGameScreen();
+                    //gui.UpdateGameScreen();
                 }
                 else
                 {
@@ -253,8 +273,10 @@ namespace Tamon_Testat
                             server.SendData(SendAttack(MonsterList[Gui.ownMonsterId], 0));
                             break;
                     } //server.SendData( own HP, Att Value, Att Name, successRate );
+                    convertData(gui, server.ReceiveData(), MonsterList[Gui.ownMonsterId]);
+
                     //string HP, Att Value, Att Name = client.ReceiveData();
-                    gui.UpdateGameScreen();
+                    //gui.UpdateGameScreen();
                 }
             }
 

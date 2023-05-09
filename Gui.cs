@@ -231,10 +231,9 @@ namespace Tamon_Testat
             Console.Write("[XXXXXXXXXX]");
         }
 
-        public void UpdateGameScreen()
+        public void UpdateGameScreen(string move, int attackValue)
         {
 
-            // ToDo HP anzeige?!
             int i = (Game.MonsterList[4].HP / 10);
             int j = (Game.MonsterList[ownMonsterId].HP / 10);
             if (i > 10) i = 10; if (j > 10) j = 10;
@@ -242,6 +241,9 @@ namespace Tamon_Testat
             for (int r = 0; r < i; r++) { Console.Write(" "); }
             Console.SetCursorPosition((28 - (10 - j)), 15);
             for (int r = 0; r < j; r++) { Console.Write(" "); }
+
+            Console.SetCursorPosition(1, 17);
+            Console.Write($"{Game.MonsterList[4].Name} used {move} and deals {attackValue} damage ");
         }
 
         public void PrintEndScreen(int i)
