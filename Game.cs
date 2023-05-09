@@ -117,10 +117,10 @@ namespace Tamon_Testat
             {
                 monster.HP = 0;
                 Console.WriteLine("your HP reached 0! you lost!");
-                return monster.HP;
+                return damage;
                 // TODO - Streamwriter (oder so) wenn verloren, danach direkt beenden/wieder zum start.
             }
-            return damage; ;
+            return damage; 
         }
         private void convertData(Gui gui ,string recStr, Monster ownmonster)
         {
@@ -169,7 +169,6 @@ namespace Tamon_Testat
             }
             Console.WriteLine("Monster Moves = " + MonsterList[0].Moves[1].Name);
 */
-
         }
 
         public void Run()
@@ -180,13 +179,13 @@ namespace Tamon_Testat
             gui.StartScreen();          // Prints Startscreen Menu and than individual Screen 1,2,3 or 4
                                         //    or stays in loop with options 3 or 4
 
-            //used to test 
+/*            //used to test 
             Console.WriteLine("Welcome to Tamon - Table Monsters!");
             convertData(gui,"Dmg 10 100 AtkName", MonsterList[0]);
             Thread.Sleep(2000);
             getEnemyTamon("0");
             Thread.Sleep(2000);
-            // end used to test
+            // end used to test*/
 
 
             if (Gui.server)
@@ -199,13 +198,14 @@ namespace Tamon_Testat
             }
 
             string monsterId = gui.PrintMonster();  // Prints Monster-Choosing Menu and returns Id Nr as string
-            string enemyId = null;
+            string enemyId;
 
             if (Gui.server)
             {
                 enemyId = server.ReceiveData();     // Server Pi waits for enemyId (string)
                 getEnemyTamon(enemyId);
                 server.SendData(monsterId);       // Server Pi sends to client ownMonsterId
+                Thread.Sleep(1000);
                 gui.GameScreen();                   // Setup Gamescreen with own Attacks and Tamon names
             }
             else
@@ -213,6 +213,7 @@ namespace Tamon_Testat
                 client.SendData(monsterId);       // Client Pi sends to client ownMonsterId
                 enemyId = client.ReceiveData();     // Client Pi waits for enemyId (string)
                 getEnemyTamon(enemyId);
+                Thread.Sleep(1000);
                 gui.GameScreen();                   // Setup Gamescreen with own Attacks and Tamon names
             }
 
@@ -222,10 +223,10 @@ namespace Tamon_Testat
             //ToDo - Lebenspunkte und string // convert
             while (MonsterList[Gui.ownMonsterId].HP > 0 && MonsterList[4].HP > 0)
             {
-
                 if (Gui.server)
                 {
-                    //string HP, int AttValue, Move.Name = server.ReceiveData();
+                    Program.Butt = JoystickButtons.None;
+                    Thread.Sleep(1000);
                     convertData(gui,server.ReceiveData(),MonsterList[Gui.ownMonsterId]);
 
                     while (Program.Butt == JoystickButtons.None || Program.Butt == JoystickButtons.Center) {; ; }
@@ -254,6 +255,10 @@ namespace Tamon_Testat
                 }
                 else
                 {
+                    Program.Butt = JoystickButtons.None;
+                    Thread.Sleep(1000);
+
+                    while (Program.Butt == JoystickButtons.None || Program.Butt == JoystickButtons.Center) {}
                     switch (Program.Butt)
                     {
 

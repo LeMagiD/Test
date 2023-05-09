@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Net.Sockets;
+using System.Threading;
 
 namespace Tamon_Testat
 {
@@ -37,6 +38,7 @@ namespace Tamon_Testat
 
         public void SendData(string s)
         {
+            Thread.Sleep(1000);
             streamWrite.WriteLine(s);
             streamWrite.Flush();
         }

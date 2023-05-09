@@ -131,7 +131,7 @@ namespace Tamon_Testat
             Console.SetCursorPosition(1, 1);
             Console.WriteLine("Connecting to Enemy");
             Console.SetCursorPosition(20, 4);
-            Console.Write("Waiting for client to connect...");
+            Console.Write("Waiting for client to connect...   ");
             Console.SetCursorPosition(20, 5);
             Console.Write("                       ");
         }
@@ -226,7 +226,7 @@ namespace Tamon_Testat
             Console.SetCursorPosition(25, 12);
             Console.Write("[XXXXXXXXXX]");
             Console.SetCursorPosition(2, 15);
-            Console.Write($"{Game.MonsterNames[ownMonsterId]}:  ");
+            Console.Write($"{Game.MonsterList[ownMonsterId].Name}:  ");
             Console.SetCursorPosition(17, 15);
             Console.Write("[XXXXXXXXXX]");
         }
