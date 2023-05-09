@@ -24,7 +24,7 @@ namespace Tamon_Testat
         }
         private void InitMonsters()
         {
-            MonsterList.Add(new Monster(MonsterNames[0], Element.normal, 100, NormalAttacks)); //TODO - how to integrate Attack into attacklist using this?
+            MonsterList.Add(new Monster(MonsterNames[0], Element.normal, 100, NormalAttacks)); 
             MonsterList.Add(new Monster(MonsterNames[1], Element.fire, 120, FireAttacks));
             MonsterList.Add(new Monster(MonsterNames[2], Element.water, 120, WaterAttacks));
             MonsterList.Add(new Monster(MonsterNames[3], Element.grass, 120, GrassAttacks));
@@ -104,6 +104,7 @@ namespace Tamon_Testat
             if (new Random().Next(0, 101) > 95) return damage * 5; // 5 times the damage if critical hit (5% chance)
             return damage;
         }
+
         private int CalculateHp(Monster monster, int dmg, int sRate)
         {
             monster.HP -= CalculateDmg(dmg, sRate);
@@ -113,13 +114,13 @@ namespace Tamon_Testat
                 Console.WriteLine("your HP reached 0! you lost!");
                 return monster.HP;
                 // TODO - Streamwriter (oder so) wenn verloren, danach direkt beenden/wieder zum start.
-                //womöglich auch ein boolschen Wert zurückgeben, welches aussagt das verloren
+                // womöglich auch ein boolschen Wert zurückgeben, welches aussagt das verloren
             }
             return monster.HP;
         }
         private void convertData(string recStr, Monster monster)
         {
-            //  TODO - convert received Data to string, split it into a array and use the integers for the damage and success rate
+            //  DONE - convert received Data to string, split it into a array and use the integers for the damage and success rate
             /*
              * string s = sr.ReadToEnd();
              * string [] str = s.Split(' ');
@@ -140,18 +141,28 @@ namespace Tamon_Testat
             int monsterId = Int32.Parse(Id);
             Monster enemyMonster = MonsterList[monsterId];
             MonsterList.Add(enemyMonster);
+
             // TODO - change location of code below
-            Console.WriteLine("Monster Index = " + MonsterList.IndexOf(MonsterList[0]));
+/*            Console.WriteLine("Monster Index = " + MonsterList.IndexOf(MonsterList[0]));
             Console.WriteLine("Monster Name = " + MonsterList[0].Name);
             for(int i = 0; i < MonsterList[0].Moves.Count;i++)
             {
-                Console.WriteLine($"Attack {i} = " + MonsterList[0].Moves[i].Name);
+                Console.WriteLine($"Attack {i+1} = " + MonsterList[0].Moves[i].Name);
             }
             Console.WriteLine("Monster Moves = " + MonsterList[0].Moves[1].Name);
 
-            // TODO - Name und Hp erhalten
+*/          
+// DONE - Name und Hp erhalten
         }
+/*        private string convertSentData(int id)
+        {
+            string s1 = MonsterList[id].Name;
+            string s2 = MonsterList[id].HP.ToString();
+            string s3 = MonsterList[id].Moves[0].Name;
+            string data = s1 +" "+ s2;
 
+            return string.Empty;
+        }*/
 
 
         public void Run()
