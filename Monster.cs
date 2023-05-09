@@ -14,7 +14,6 @@ namespace Tamon_Testat
         //Konstruktor
         public Monster(string name, Element element, int hp, List<Attack> moves)
         {
-            //this is a test to see if Git works
             HP = hp;
             Element = element;
             Name = name;

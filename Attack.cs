@@ -10,7 +10,6 @@
 
         public Attack(int damage, Element element, int successRate, string name)
         {
-            //this is a test to see if Git works
             Damage = damage;
             Element = element;
             SuccessRate = successRate;
