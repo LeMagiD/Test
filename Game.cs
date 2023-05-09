@@ -149,9 +149,21 @@ namespace Tamon_Testat
             string succRate = MonsterList[Gui.ownMonsterId].Moves[move].SuccessRate.ToString();
             return ownHP + " " + attackValue + " " + attackName + " " + succRate;
         }
-
+        private void getEnemyTamon(string Id)
+        {
+            int monsterId = Int32.Parse(Id);
+            Monster enemyMonster = MonsterList[monsterId];
+            MonsterList.Add(enemyMonster);
+        }
         public void Run()
         {
+            //used to test 
+            Console.WriteLine("Welcome to Tamon - Table Monsters!");
+            convertData("Dmg 10 100 Acc", MonsterList[0]);
+            Thread.Sleep(2000);
+            getEnemyTamon("0");
+            Thread.Sleep(2000);
+            // end used to test
             Server server = new Server();
             Client client = new Client();
 
