@@ -175,7 +175,6 @@ namespace Tamon_Testat
             Gui gui = new Gui();
             gui.StartScreen();
             //TODO - GUI + TCP
-            //string temp = MonsterList[0].Name; // TODO - Get attack names from monster list. 
         }
 
     }
