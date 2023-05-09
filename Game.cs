@@ -263,22 +263,22 @@ namespace Tamon_Testat
                     {
 
                         case JoystickButtons.Up:
-                            server.SendData(SendAttack(MonsterList[Gui.ownMonsterId], 0));
+                            client.SendData(SendAttack(MonsterList[Gui.ownMonsterId], 0));
                             break;
                         case JoystickButtons.Down:
-                            server.SendData(SendAttack(MonsterList[Gui.ownMonsterId], 1));
+                            client.SendData(SendAttack(MonsterList[Gui.ownMonsterId], 1));
                             break;
                         case JoystickButtons.Left:
-                            server.SendData(SendAttack(MonsterList[Gui.ownMonsterId], 2));
+                            client.SendData(SendAttack(MonsterList[Gui.ownMonsterId], 2));
                             break;
                         case JoystickButtons.Right:
-                            server.SendData(SendAttack(MonsterList[Gui.ownMonsterId], 3));
+                            client.SendData(SendAttack(MonsterList[Gui.ownMonsterId], 3));
                             break;
                         default:
-                            server.SendData(SendAttack(MonsterList[Gui.ownMonsterId], 0));
+                            client.SendData(SendAttack(MonsterList[Gui.ownMonsterId], 0));
                             break;
                     } //server.SendData( own HP, Att Value, Att Name, successRate );
-                    convertData(gui, server.ReceiveData(), MonsterList[Gui.ownMonsterId]);
+                    convertData(gui, client.ReceiveData(), MonsterList[Gui.ownMonsterId]);
 
                     //string HP, Att Value, Att Name = client.ReceiveData();
                     //gui.UpdateGameScreen();

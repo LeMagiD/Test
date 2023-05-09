@@ -237,13 +237,13 @@ namespace Tamon_Testat
             int i = (Game.MonsterList[4].HP / 10);
             int j = (Game.MonsterList[ownMonsterId].HP / 10);
             if (i > 10) i = 10; if (j > 10) j = 10;
-            Console.SetCursorPosition((36 - (10 - i)), 12);
+            Console.SetCursorPosition((35 - (10 - i)), 12);
             for (int r = 0; r < i; r++) { Console.Write(" "); }
-            Console.SetCursorPosition((28 - (10 - j)), 15);
+            Console.SetCursorPosition((27 - (10 - j)), 15);
             for (int r = 0; r < j; r++) { Console.Write(" "); }
 
             Console.SetCursorPosition(1, 17);
-            Console.Write($"{Game.MonsterList[4].Name} used {move} and deals {attackValue} damage ");
+            Console.Write($"{Game.MonsterList[4].Name} used {move} and deals {attackValue} damage                  ");
         }
 
         public void PrintEndScreen(int i)
